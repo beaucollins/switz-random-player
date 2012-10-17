@@ -1,0 +1,23 @@
+#!/bin/sh
+
+if [ -z "$FLEX_HOME" ]; then
+  FLEX_HOME="/usr/local/src/flex_sdk_4"
+fi
+
+export FLEX_HOME
+
+$FLEX_HOME/bin/mxmlc \
+	-compiler.source-path lib/as3corelib/src \
+	-compiler.optimize \
+	-compiler.use-resource-bundle-metadata \
+	-compiler.show-actionscript-warnings \
+	-compiler.show-binding-warnings \
+	-compiler.show-unused-type-selector-warnings \
+	-compiler.strict \
+	-compiler.accessible=false \
+	-compiler.compress \
+	-use-network \
+	-library-path lib/ \
+	-static-link-runtime-shared-libraries \
+	-output output/SwitzerlandPlayer.swf \
+	src/SwitzerlandPlayer.as
