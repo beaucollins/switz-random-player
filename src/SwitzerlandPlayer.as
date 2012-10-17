@@ -1,9 +1,9 @@
 package {
-  
+    
   import flash.display.MovieClip;
   import flash.net.URLRequest;
-  import com.adobe.serialization.json.JSON;
   import com.adobe.net.DynamicURLLoader;
+  import com.adobe.serialization.json.JSON;
   import flash.events.Event;
   import flash.external.ExternalInterface;
   import flash.display.StageScaleMode;
@@ -26,17 +26,17 @@ package {
 
       video_json_request.url = this.loaderInfo.parameters.url || 'http://redimastudio.com/videos.json';
       
-      var request_loader = new DynamicURLLoader();
+      var request_loader:DynamicURLLoader = new DynamicURLLoader();
       request_loader.addEventListener(Event.COMPLETE, loadVideos);
       request_loader.load(video_json_request);
       
     }
     
-    public function startPlayers(){
+    public function startPlayers():void{
       trace(players.length);
-      players.forEach(function(item:VideoClip, i:int, array:Array){
+      players.forEach(function(item:VideoClip, i:int, array:Array):void{
         trace(item);
-        setTimeout(function(){
+        setTimeout(function():void{
           item.startNewVideo();          
         }, i*500);
       });
@@ -47,7 +47,7 @@ package {
       return video;
     }
     
-    public function videoDonePlaying(video:VideoData) {
+    public function videoDonePlaying(video:VideoData):void {
       videos.push(video);
     }
     
@@ -57,7 +57,7 @@ package {
       return new_video;
     }
     
-    public function videoClicked(video:VideoData){
+    public function videoClicked(video:VideoData):void{
       trace("Open page:" + video.url);
       if (ExternalInterface.available) {
         ExternalInterface.call('$.slidePlayer', video.url);
@@ -65,8 +65,7 @@ package {
       
     }
     
-    
-    private function initializePlayers(){
+    private function initializePlayers():void{
       
       players = new Array();
       var p:VideoClip;
@@ -79,7 +78,7 @@ package {
       
     }
     
-    private function positionVideoWithIndex(clip:MovieClip, index:Number){
+    private function positionVideoWithIndex(clip:MovieClip, index:Number):void{
       switch (index)
       {
         case 0 :
@@ -101,13 +100,18 @@ package {
       }
     }
     
-    private function loadVideos(e:Event){
+    private function loadVideos(e:Event):void{
       
-      var loader = DynamicURLLoader(e.target);
-      var video_info:Array = JSON.decode(loader.data) as Array;
-      videos = video_info.map(function(item:Object, index:int, array:Array){
+      var loader:DynamicURLLoader = DynamicURLLoader(e.target);
+      var video_info:Array = com.adobe.serialization.json.JSON.decode(loader.data) as Array;
+      
+      videos = video_info.map(function(item:Object, index:int, array:Array):VideoData {
         return new VideoData(item.src, item.url);
       }, this).sortOn('random');
+      
+      while(videos.length < 4){
+        videos.push(videos[Math.floor(Math.random() * videos.length)]);
+      }
       
       
       startPlayers();

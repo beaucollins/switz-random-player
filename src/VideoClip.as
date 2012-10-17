@@ -29,11 +29,11 @@ package {
       addEventListener(MouseEvent.CLICK, videoClicked);
     }
     
-    private function videoClicked(e:MouseEvent){
+    private function videoClicked(e:MouseEvent):void{
       provider.videoClicked(video_data);
     }
     
-    public function startNewVideo(){
+    public function startNewVideo():void{
       video_data = provider.getVideoData()
       if(video_data != null){
         playVideoSource(video_data.src);
@@ -41,7 +41,7 @@ package {
       
     }
     
-    public function playVideoSource(src:String){
+    public function playVideoSource(src:String):void{
       play_count ++;
       trace("Play count:: " + play_count);
       video_player.source = src;
@@ -49,14 +49,14 @@ package {
       video_player.play();
     }
     
-    public function swapVideo(){
+    public function swapVideo():void{
       video_data = provider.swapVideo(video_data);
       if(video_data != null){
         playVideoSource(video_data.src);        
       }
     }
     
-    private function playbackDoneOrError(e:VideoEvent){
+    private function playbackDoneOrError(e:VideoEvent):void{
       if(e.state == VideoState.CONNECTION_ERROR || e.state == VideoState.STOPPED){
         //put the video back and ask for a new one
         swapVideo();
@@ -65,7 +65,7 @@ package {
       }
     }
     
-    private function drawBackground(){
+    private function drawBackground():void{
       var w:Number = video_player.width;
       var h:Number = video_player.height;
       graphics.beginFill(0x000000);
