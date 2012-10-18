@@ -6,7 +6,7 @@ For use on switzerlandllc.com
 
 First, install the flex sdk (if you don't have it):
 
-    > brew instal flex_sdk
+    > brew install flex_sdk
 
 Follow the homebrew instructions to make sure you configure everything
 correctly.
